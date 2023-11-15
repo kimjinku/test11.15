@@ -9,15 +9,29 @@
 <div class="wrap">
     <div class="logo">logo</div>
     <div class="content-wrap">
+        <div class="note-list">
+            <ul>
+                <li th:each="note : ${noteList}" th:class="${targetNote.noteId==note.noteId} ? 'select-item ':''">
+                    <a th:if="${! #lists.isEmpty(note.posts)}" th:href="@{|/detail/${note.noteId}/${note.posts[0].id}|}" th:text="${note.title}"></a>
+                </li>
+            </ul>
+            <form action="/noteWrite" method="post">
+                <input type="hidden" name="id" th:value="${targetPost.id}">
+                <input type="hidden" name="noteId" th:value="${targetNote.noteId}">
+                <input type="submit" value="노트추가">
+            </form>
+        </div>
         <div class="side-menu">
             <!--            3. 템플릿에서 게시물 목록 출력-->
             <ul>
-                <li th:each="post : ${postList}">
-                    <a th:href="@{|/detail/${post.id}|}" th:text="${post.title}"></a>
+                <li th:each="post : ${postList}" th:class="${targetPost.id==post.id} ? 'select-item ':''">
+                    <a th:href="@{|/detail/${targetNote.noteId}/${post.id}|}" th:text="${post.title}"></a>
                 </li>
             </ul>
             <div>
                 <form action="/write" method="post">
+                    <input type="hidden" name="id" th:value="${targetPost.id}">
+                    <input type="hidden" name="noteId" th:value="${targetNote.noteId}">
                     <input type="submit" value="추가">
                 </form>
             </div>
@@ -34,7 +48,15 @@
                     <textarea name="content" cols="30" rows="10" th:text="${targetPost.content}"></textarea>
                 </div>
                 <div>
+                    <input type="hidden" name="id" th:value="${targetPost.id}">
+                    <input type="hidden" name="noteId" th:value="${targetNote.noteId}">
                     <input type="submit" value="수정">
+                </div>
+            </form>
+            <form action="/delete" method="post">
+                <div>
+                    <input type="hidden" name="id" th:value="${targetPost.id}">
+                    <input type="submit" value="삭제">
                 </div>
             </form>
         </div>

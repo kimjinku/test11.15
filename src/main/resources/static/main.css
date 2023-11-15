@@ -23,6 +23,13 @@ a{
     display: flex;
 }
 
+.note-list{
+background: pink;
+    width:15%;
+    height:800px;
+    text-align: center;
+}
+
 .side-menu {
     background: indianred;
     width:10%;
@@ -32,5 +39,8 @@ a{
 
 .content {
     background: lightseagreen;
-    width:90%;
+    width:75%;
+}
+.select-item{
+    background:skyblue;
 }
